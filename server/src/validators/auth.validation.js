@@ -14,8 +14,12 @@ export const registerSchema = z.object({
 
   password: z
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .max(100, "Password is too long"),
+    .min(8, "Password must be at least 8 characters")
+    .max(100, "Password is too long")
+    .regex(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).*$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+    ),
 
   role: z
     .enum(["VISITOR", "CREATOR"])

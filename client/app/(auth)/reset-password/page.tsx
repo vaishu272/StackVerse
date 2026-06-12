@@ -37,8 +37,11 @@ function ResetPasswordContent() {
       return;
     }
 
-    if (password.length < 8) {
-      toast.error("Password must be at least 8 characters long.");
+    const strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).*$/;
+    if (password.length < 8 || !strongPasswordRegex.test(password)) {
+      toast.error(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+      );
       return;
     }
 
