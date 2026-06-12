@@ -1,8 +1,13 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:5000/api"),
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+  NEXT_PUBLIC_API_URL: z
+    .string()
+    .url()
+    .default("https://stackverse-api.onrender.com"),
+  NODE_ENV: z
+    .enum(["development", "production", "test"])
+    .default("development"),
 });
 
 // Parse environment variables safely
