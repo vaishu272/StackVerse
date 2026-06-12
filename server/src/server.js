@@ -9,9 +9,28 @@ import "./config/passport.js";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://stack-verse-silk.vercel.app"
+];
+
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, postman)
+      if (!origin) return callback(null, true);
+      
+      const isAllowed = allowedOrigins.includes(origin) || origin.endsWith(".vercel.app");
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
@@ -34,6 +53,7 @@ app.use((err, req, res, next) => {
   res.status(status).json({
     success: false,
     message: err.message || "Internal Server Error",
+    ...(err.extraDetails && { errors: err.extraDetails }),
     ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),
   });
 });

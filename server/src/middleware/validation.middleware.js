@@ -7,22 +7,19 @@ export const validate = (schema) => async (req, res, next) => {
     next();
   } catch (error) {
     if (error instanceof ZodError) {
-      if (error instanceof ZodError) {
-        const fieldErrors = {};
+      const fieldErrors = {};
 
-        error.issues.forEach((issue) => {
-          const fieldName = issue.path[0];
-          fieldErrors[fieldName] = issue.message;
-        });
+      error.issues.forEach((issue) => {
+        const fieldName = issue.path[0];
+        fieldErrors[fieldName] = [issue.message];
+      });
 
-        return next({
-          status: 400,
-          message: "Validation failed",
-          extraDetails: fieldErrors,
-        });
-      }
-
-      next(error);
+      return next({
+        status: 400,
+        message: "Validation failed",
+        extraDetails: fieldErrors,
+      });
     }
+    next(error);
   }
 };
