@@ -1,4 +1,9 @@
 import "dotenv/config";
+import dns from "dns";
+
+// Force Node.js to prefer IPv4 DNS resolution (prevents ENETUNREACH on IPv6-unsupported hosts like Render/Gmail)
+dns.setDefaultResultOrder("ipv4first");
+
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
