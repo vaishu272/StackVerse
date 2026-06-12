@@ -62,11 +62,16 @@ export const registerUser = async (req, res, next) => {
       </div>
     `;
 
-    await sendEmail({
-      to: user.email,
-      subject: "Your StackVerse Verification Code",
-      html,
-    });
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: "Your StackVerse Verification Code",
+        html,
+      });
+    } catch (emailError) {
+      console.error("Email delivery failed, but user was created. Logging OTP for manual verification:", emailError);
+      console.log(`\n🔑 [OTP BYPASS] Verification OTP for ${user.email} is: ${otpCode}\n`);
+    }
 
     res.status(201).json({
       success: true,
