@@ -12,6 +12,11 @@ import { toast } from "react-hot-toast";
 import { authService } from "@/features/auth/services/authService";
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { loginSchema, LoginInput } from "@/features/auth/validations/auth";
+import { env } from "@/env";
+
+const API_URL = env.NEXT_PUBLIC_API_URL.endsWith("/api")
+  ? env.NEXT_PUBLIC_API_URL
+  : `${env.NEXT_PUBLIC_API_URL}/api`;
 
 export default function LoginPage() {
   const router = useRouter();
@@ -240,7 +245,7 @@ export default function LoginPage() {
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() =>
-                (window.location.href = "http://localhost:5000/api/auth/google")
+                (window.location.href = `${API_URL}/auth/google`)
               }
               className="flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors text-sm font-semibold cursor-pointer text-slate-700 dark:text-slate-300"
             >
@@ -266,7 +271,7 @@ export default function LoginPage() {
             </button>
             <button
               onClick={() =>
-                (window.location.href = "http://localhost:5000/api/auth/github")
+                (window.location.href = `${API_URL}/auth/github`)
               }
               className="flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors text-sm font-semibold cursor-pointer text-slate-700 dark:text-slate-300"
             >

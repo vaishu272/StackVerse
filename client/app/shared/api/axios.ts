@@ -1,5 +1,10 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "@/features/auth/store/auth.store";
+import { env } from "@/env";
+
+const API_URL = env.NEXT_PUBLIC_API_URL.endsWith("/api")
+  ? env.NEXT_PUBLIC_API_URL
+  : `${env.NEXT_PUBLIC_API_URL}/api`;
 
 interface RefreshResponse {
   token: string;
@@ -17,7 +22,7 @@ interface ErrorResponse {
 }
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: API_URL,
   withCredentials: true,
 });
 
@@ -94,7 +99,7 @@ API.interceptors.response.use(
       try {
         // Refresh Access Token
         const refreshResponse = await axios.post<RefreshResponse>(
-          "http://localhost:5000/api/auth/refresh",
+          `${API_URL}/auth/refresh`,
           {},
           {
             withCredentials: true,
