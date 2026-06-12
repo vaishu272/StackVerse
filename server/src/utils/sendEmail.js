@@ -60,32 +60,6 @@ const getTransporter = async () => {
 
 export const sendEmail = async ({ to, subject, html }) => {
   try {
-    // 1. If RESEND_API_KEY is present, send email via Resend HTTP API (avoids Render SMTP block)
-    if (process.env.RESEND_API_KEY) {
-      console.log("Using Resend API for email delivery.");
-      const response = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: process.env.SMTP_FROM || "StackVerse <onboarding@resend.dev>",
-          to,
-          subject,
-          html,
-        }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to send email via Resend API");
-      }
-      console.log(`📧 Email sent successfully via Resend API to ${to}. ID: ${data.id}`);
-      return data;
-    }
-
-    // 2. Otherwise fall back to SMTP (Gmail or Ethereal test account)
     const mailTransporter = await getTransporter();
     const info = await mailTransporter.sendMail({
       from: process.env.SMTP_FROM || '"Vaishu Mali" <vaishumali85@gmail.com>',
