@@ -2,51 +2,51 @@
 
 A modern multi-user engineering blogging platform built with Next.js, Express.js, Prisma, PostgreSQL, and Cloudinary.
 
-👉 **[Live App Link]()**
+👉 **[Live App Link](https://stack-verse-silk.vercel.app)**
 
 ## Features
 
 ### Authentication
 
-* JWT Authentication
-* Refresh Token Rotation
-* Role-Based Access Control (Visitor / Creator)
-* Google OAuth Login
-* GitHub OAuth Login
-* Email Verification
-* Forgot Password & Reset Password
-* Protected Routes
+- JWT Authentication
+- Refresh Token Rotation
+- Role-Based Access Control (Visitor / Creator)
+- Google OAuth Login
+- GitHub OAuth Login
+- Email Verification
+- Forgot Password & Reset Password
+- Protected Routes
 
 ### Blogging Platform
 
-* Rich Text Editor (TipTap)
-* Draft & Publish Workflow
-* Article Categories
-* SEO Keywords
-* Cover Image Upload (Cloudinary)
-* Infinite Scroll
-* Pagination
-* Article Bookmarks
-* PDF Export
-* Responsive Blog Feed
+- Rich Text Editor (TipTap)
+- Draft & Publish Workflow
+- Article Categories
+- SEO Keywords
+- Cover Image Upload (Cloudinary)
+- Infinite Scroll
+- Pagination
+- Article Bookmarks
+- PDF Export
+- Responsive Blog Feed
 
 ### User Profiles
 
-* Profile Management
-* Avatar Upload
-* Creator Dashboard
-* Visitor Dashboard
-* Author Statistics
+- Profile Management
+- Avatar Upload
+- Creator Dashboard
+- Visitor Dashboard
+- Author Statistics
 
 ### Performance Optimizations
 
-* Dynamic Imports
-* Lazy Loading
-* Zustand Store Optimization
-* Cloudinary Image Optimization
-* React Query Caching
-* Next.js App Router
-* Route Protection using Proxy
+- Dynamic Imports
+- Lazy Loading
+- Zustand Store Optimization
+- Cloudinary Image Optimization
+- React Query Caching
+- Next.js App Router
+- Route Protection using Proxy
 
 ---
 
@@ -54,27 +54,27 @@ A modern multi-user engineering blogging platform built with Next.js, Express.js
 
 ## Frontend
 
-* Next.js 16
-* TypeScript
-* Tailwind CSS
-* shadcn/ui
-* Zustand
-* TanStack Query
-* Axios
-* React Hook Form
-* Zod
-* Framer Motion
+- Next.js 16
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Zustand
+- TanStack Query
+- Axios
+- React Hook Form
+- Zod
+- Framer Motion
 
 ## Backend
 
-* Node.js
-* Express.js
-* Prisma ORM
-* PostgreSQL (Neon)
-* JWT
-* Passport.js
-* Cloudinary
-* Nodemailer
+- Node.js
+- Express.js
+- Prisma ORM
+- PostgreSQL (Neon)
+- JWT
+- Passport.js
+- Cloudinary
+- Nodemailer
 
 ---
 
@@ -197,19 +197,19 @@ http://localhost:3000
 
 ## Frontend
 
-* Vercel
+- Vercel
 
 ## Backend
 
-* Render
+- Render
 
 ## Database
 
-* Neon PostgreSQL
+- Neon PostgreSQL
 
 ## Image Storage
 
-* Cloudinary
+- Cloudinary
 
 ---
 
@@ -217,32 +217,32 @@ http://localhost:3000
 
 ## Visitor
 
-* Browse blogs
-* Bookmark articles
-* View profiles
-* Download articles as PDF
+- Browse blogs
+- Bookmark articles
+- View profiles
+- Download articles as PDF
 
 ## Creator
 
-* Create articles
-* Edit articles
-* Publish drafts
-* Manage profile
-* Access creator dashboard
+- Create articles
+- Edit articles
+- Publish drafts
+- Manage profile
+- Access creator dashboard
 
 ---
 
 # Future Enhancements
 
-* AI Writing Assistant
-* Article Analytics
-* Followers & Following
-* Comments System
-* Notifications
-* Collaborative Editing
-* Reading History
-* Trending Articles
-* Admin Dashboard
+- AI Writing Assistant
+- Article Analytics
+- Followers & Following
+- Comments System
+- Notifications
+- Collaborative Editing
+- Reading History
+- Trending Articles
+- Admin Dashboard
 
 ---
 
