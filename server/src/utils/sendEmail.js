@@ -15,6 +15,7 @@ const getTransporter = async () => {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      family: 4, // Force IPv4 to prevent ENETUNREACH on IPv6-unsupported hosts like Render
     });
     console.log("Using custom SMTP configuration for email delivery.");
   } else {
@@ -32,6 +33,7 @@ const getTransporter = async () => {
           user: testAccount.user,
           pass: testAccount.pass,
         },
+        family: 4, // Force IPv4 to prevent ENETUNREACH
       });
       console.log("Ethereal SMTP test account created successfully.");
       console.log(`User: ${testAccount.user}`);
