@@ -51,7 +51,8 @@ export default function RegisterPage() {
         response.message ||
           "Registration successful! Please verify your email.",
       );
-      router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
+      const otpParam = response.otp ? `&otp=${response.otp}` : "";
+      router.push(`/verify-email?email=${encodeURIComponent(data.email)}${otpParam}`);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         if (error.response?.data?.errors) {

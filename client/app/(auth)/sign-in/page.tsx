@@ -41,7 +41,7 @@ export default function LoginPage() {
     try {
       const response = await authService.login(data);
 
-      setCredentials({ user: response.user, accessToken: response.token || "" });
+      setCredentials({ user: response.user!, accessToken: response.token || "" });
       toast.success("Welcome back to StackVerse!");
       router.push("/");
     } catch (error: unknown) {

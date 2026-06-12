@@ -22,11 +22,12 @@ export const logoutUser = async (req, res, next) => {
       }
     }
 
+    const isProd = process.env.NODE_ENV === "production";
     // Clear HTTP-only cookie
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
     });
 
     res.status(200).json({

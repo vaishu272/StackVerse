@@ -1,6 +1,8 @@
 import crypto from "crypto";
 import prisma from "../config/db.js";
 import { sendEmail } from "../utils/sendEmail.js";
+import generateAccessToken from "../utils/generateAccessToken.js";
+import generateRefreshToken from "../utils/generateRefreshToken.js";
 
 export const verifyEmail = async (req, res, next) => {
   try {
@@ -47,7 +49,7 @@ export const verifyEmail = async (req, res, next) => {
     }
 
     // Mark user as verified
-    await prisma.user.update({
+    const verifiedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
         emailVerified: true,
@@ -56,9 +58,46 @@ export const verifyEmail = async (req, res, next) => {
       },
     });
 
+    const accessToken = generateAccessToken(verifiedUser);
+    const refreshToken = generateRefreshToken(verifiedUser);
+
+    // Hash refresh token for DB
+    const hashedRefreshToken = crypto
+      .createHash("sha256")
+      .update(refreshToken)
+      .digest("hex");
+
+    // Save refresh token in database
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+    await prisma.refreshToken.create({
+      data: {
+        token: hashedRefreshToken,
+        userId: verifiedUser.id,
+        expiresAt,
+      },
+    });
+
+    const isProd = process.env.NODE_ENV === "production";
+    // Set refresh token in HTTP-only cookie
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
     res.status(200).json({
       success: true,
-      message: "Email verified successfully! You can now log in.",
+      message: "Email verified and logged in successfully!",
+      token: accessToken,
+      user: {
+        id: verifiedUser.id,
+        name: verifiedUser.name,
+        email: verifiedUser.email,
+        role: verifiedUser.role,
+        avatar: verifiedUser.avatar,
+        createdAt: verifiedUser.createdAt,
+      },
     });
   } catch (error) {
     next(error);

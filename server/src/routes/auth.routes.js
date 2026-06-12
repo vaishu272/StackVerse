@@ -75,11 +75,12 @@ const handleOAuthCallback = async (req, res, next) => {
       },
     });
 
+    const isProd = process.env.NODE_ENV === "production";
     // Set refresh token in HTTP-only cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 

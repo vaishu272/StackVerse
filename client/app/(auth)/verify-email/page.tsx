@@ -6,21 +6,26 @@ import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { authService } from "@/features/auth/services/authService";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const urlEmail = searchParams.get("email") || "";
+  const urlOtp = searchParams.get("otp") || "";
 
   const [email, setEmail] = useState(urlEmail);
   const [prevUrlEmail, setPrevUrlEmail] = useState(urlEmail);
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState(urlOtp);
+  const [prevUrlOtp, setPrevUrlOtp] = useState(urlOtp);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
 
-  if (urlEmail !== prevUrlEmail) {
+  if (urlEmail !== prevUrlEmail || urlOtp !== prevUrlOtp) {
     setPrevUrlEmail(urlEmail);
     setEmail(urlEmail);
+    setPrevUrlOtp(urlOtp);
+    setOtp(urlOtp);
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,8 +43,17 @@ function VerifyEmailContent() {
     setIsSubmitting(true);
     try {
       const response = await authService.verifyEmail({ email, otp });
-      toast.success(response.message || "Email verified successfully!");
-      router.push("/login");
+      if (response.token && response.user) {
+        useAuthStore.getState().setCredentials({
+          user: response.user,
+          accessToken: response.token,
+        });
+        toast.success("Email verified and logged in successfully!");
+        router.push(response.user.role === "CREATOR" ? "/dashboard/creator" : "/dashboard/visitor");
+      } else {
+        toast.success(response.message || "Email verified successfully!");
+        router.push("/sign-in");
+      }
     } catch (error: unknown) {
       let msg = "Failed to verify email. The code may be invalid or expired.";
       if (axios.isAxiosError(error)) {
